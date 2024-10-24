@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from config import Config
 from flask_cors import CORS
 from datetime import timedelta
+import os
 
 # Initialize the database and migration objects
 db = SQLAlchemy()
@@ -38,4 +39,14 @@ def create_app():
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response
 
-    return app
+if __name__ == "__main__":
+    app = create_app()
+    
+    # Get the port from environment variables or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+
+    # Log the port for debugging
+    print(f"Running on port: {port}")
+
+    # Bind to 0.0.0.0 and the specified port
+    app.run(host='0.0.0.0', port=port)
