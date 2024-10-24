@@ -13,7 +13,7 @@ def create_app():
     app = Flask(__name__)
     
     # Configure CORS for all routes and allow credentials
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000", "methods": ["GET", "POST", "DELETE", "OPTIONS"], "supports_credentials": True}})
+    CORS(app, resources={r"/*": {"origins": "https://villa-bnb-drop.onrender.com", "methods": ["GET", "POST", "DELETE", "OPTIONS"], "supports_credentials": True}})
     
     app.config['SECRET_KEY'] = "6e60f334ca270f07cff4b7d87b581d4d"
     app.config.from_object(Config)
