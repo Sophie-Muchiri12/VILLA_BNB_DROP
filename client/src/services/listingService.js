@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000'; // Ensure this is correct
+const API_BASE_URL = 'http://localhost:5000'; 
 
 export const getListings = async () => {
     try {

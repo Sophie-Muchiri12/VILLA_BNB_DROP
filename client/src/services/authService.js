@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:5000'; // Adjust based on your environment
+const API_BASE_URL = 'http://127.0.0.1:5000'; // 
 
 export const signUp = async (name, email, password) => {
     try {
