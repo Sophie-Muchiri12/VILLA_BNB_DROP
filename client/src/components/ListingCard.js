@@ -24,6 +24,7 @@ const ListingCard = ({ listing, onFavorite, onBook }) => {
   const [loading, setLoading] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isFavoriteClicked, setIsFavoriteClicked] = useState(false); // Debounce state
 
   const openBookingModal = () => {
     setIsBooking(true);
@@ -31,8 +32,11 @@ const ListingCard = ({ listing, onFavorite, onBook }) => {
   };
 
   const openFavoriteModal = () => {
+    if (isFavoriteClicked) return; // Prevent double clicks
+    setIsFavoriteClicked(true); // Set clicked state to true
     setIsBooking(false);
     setOpenModal(true);
+    setTimeout(() => setIsFavoriteClicked(false), 500); // Reset after 500ms
   };
 
   const handleFavorite = async () => {
@@ -139,7 +143,7 @@ const ListingCard = ({ listing, onFavorite, onBook }) => {
         </Button>
         <IconButton
           aria-label="add to favorites"
-          onClick={openFavoriteModal}  // Now triggers the email modal for favoriting
+          onClick={openFavoriteModal}
           disabled={isFavorite}
         >
           <FavoriteIcon color={isFavorite ? 'error' : 'disabled'} />
@@ -223,4 +227,4 @@ const ListingCard = ({ listing, onFavorite, onBook }) => {
   );
 };
 
-export default ListingCard;
+export default ListingCard;  // Ensure the export statement is included at the end
