@@ -1,4 +1,5 @@
-from app import create_app, db
+from app import create_app
+from database import db 
 from models.listing import Listing
 
 app = create_app()

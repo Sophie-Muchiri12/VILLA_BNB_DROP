@@ -1,4 +1,4 @@
-from app import db
+from database import db
 
 class Listing(db.Model):
     __tablename__ = 'listings'

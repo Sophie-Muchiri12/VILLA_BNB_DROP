@@ -4,7 +4,7 @@ from models.listing import Listing
 from models.guest import Guest
 from models.favorite import Favorite
 from models.booking import Booking
-from app import db
+from database import db
 from datetime import datetime
 
 # Utility function to return CORS headers for OPTIONS requests
