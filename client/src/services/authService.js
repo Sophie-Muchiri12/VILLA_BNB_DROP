@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:5000'; // 
+const API_BASE_URL = 'https://villa-bnb-server.onrender.com'; // 
 
 export const signUp = async (name, email, password) => {
     try {

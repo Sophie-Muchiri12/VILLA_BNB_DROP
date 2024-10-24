@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://127.0.0.1:5000'; // Flask API base URL
+const API_BASE_URL = 'https://villa-bnb-server.onrender.com'; // Flask API base URL
 // src/services/guestlisting.js
 export async function getFavorites(email) {
     const response = await fetch(`${API_BASE_URL}/favorites?email=${encodeURIComponent(email)}`, {
