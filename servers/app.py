@@ -32,12 +32,12 @@ def create_app():
     from routes import create_routes
     create_routes(app,db)
 
-    # Add the after_request function for CORS headers
-    @app.after_request
-    def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Credentials', 'true')
-        return response
+    # # Add the after_request function for CORS headers
+    # @app.after_request
+    # def after_request(response):
+    #     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    #     response.headers.add('Access-Control-Allow-Credentials', 'true')
+    #     return response
     
 
     return app
