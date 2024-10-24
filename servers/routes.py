@@ -10,7 +10,7 @@ from datetime import datetime
 # Utility function to return CORS headers for OPTIONS requests
 def _build_cors_prelight_response():
     response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
+    response.headers.add("Access-Control-Allow-Origin", "https://villa-bnb-drop.onrender.com")
     response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
     response.headers.add("Access-Control-Allow-Credentials", "true")
