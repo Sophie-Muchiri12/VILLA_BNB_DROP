@@ -38,6 +38,9 @@ def create_app():
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response
+    
+
+    return app
 
 if __name__ == "__main__":
     app = create_app()
@@ -50,3 +53,5 @@ if __name__ == "__main__":
 
     # Bind to 0.0.0.0 and the specified port
     app.run(host='0.0.0.0', port=port)
+
+    
