@@ -13,11 +13,16 @@ function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
+  const isLanding = location.pathname === '/';
+  // Light style: solid background + dark text on app pages; on landing only after scroll
+  const useLightStyle = !isLanding || scrolled;
+
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
+    handler();
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
-  }, []);
+  }, [location.pathname]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -41,10 +46,10 @@ function NavBar() {
           padding: '0 32px',
           height: '68px',
           transition: 'background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease',
-          background: scrolled ? 'rgba(255,255,255,0.92)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(12px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-          boxShadow: scrolled ? '0 1px 0 rgba(0,0,0,0.08)' : 'none',
+          background: useLightStyle ? 'rgba(255,255,255,0.92)' : 'transparent',
+          backdropFilter: useLightStyle ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: useLightStyle ? 'blur(12px)' : 'none',
+          boxShadow: useLightStyle ? '0 1px 0 rgba(0,0,0,0.08)' : 'none',
         }}
       >
         {/* Logo */}
@@ -81,7 +86,7 @@ function NavBar() {
               fontWeight: 700,
               fontSize: '1.1rem',
               letterSpacing: '-0.01em',
-              color: scrolled ? '#1a1a1a' : '#ffffff',
+              color: useLightStyle ? '#1a1a1a' : '#ffffff',
               transition: 'color 0.3s',
             }}
           >
@@ -106,7 +111,7 @@ function NavBar() {
                 fontSize: '0.875rem',
                 fontWeight: 500,
                 textDecoration: 'none',
-                color: scrolled
+                color: useLightStyle
                   ? isActive(path) ? '#FF385C' : '#444'
                   : isActive(path) ? '#ffffff' : 'rgba(255,255,255,0.75)',
                 transition: 'color 0.2s',
@@ -115,12 +120,12 @@ function NavBar() {
               }}
               onMouseEnter={(e) => {
                 if (!isActive(path)) {
-                  e.currentTarget.style.color = scrolled ? '#1a1a1a' : '#ffffff';
+                  e.currentTarget.style.color = useLightStyle ? '#1a1a1a' : '#ffffff';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive(path)) {
-                  e.currentTarget.style.color = scrolled ? '#444' : 'rgba(255,255,255,0.75)';
+                  e.currentTarget.style.color = useLightStyle ? '#444' : 'rgba(255,255,255,0.75)';
                 }
               }}
             >
@@ -149,20 +154,20 @@ function NavBar() {
             fontSize: '0.875rem',
             fontWeight: 500,
             textDecoration: 'none',
-            color: scrolled ? '#1a1a1a' : '#ffffff',
-            border: scrolled ? '1.5px solid rgba(0,0,0,0.2)' : '1.5px solid rgba(255,255,255,0.6)',
+            color: useLightStyle ? '#1a1a1a' : '#ffffff',
+            border: useLightStyle ? '1.5px solid rgba(0,0,0,0.2)' : '1.5px solid rgba(255,255,255,0.6)',
             borderRadius: '999px',
             padding: '8px 22px',
             transition: 'all 0.2s ease',
             background: 'transparent',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = scrolled ? '#1a1a1a' : '#ffffff';
-            e.currentTarget.style.color = scrolled ? '#ffffff' : '#1a1a1a';
+            e.currentTarget.style.background = useLightStyle ? '#1a1a1a' : '#ffffff';
+            e.currentTarget.style.color = useLightStyle ? '#ffffff' : '#1a1a1a';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = scrolled ? '#1a1a1a' : '#ffffff';
+            e.currentTarget.style.color = useLightStyle ? '#1a1a1a' : '#ffffff';
           }}
           className="villabnb-signin-btn"
         >
@@ -193,7 +198,7 @@ function NavBar() {
                 display: 'block',
                 width: 22,
                 height: 2,
-                background: scrolled ? '#1a1a1a' : '#ffffff',
+                background: useLightStyle ? '#1a1a1a' : '#ffffff',
                 borderRadius: 2,
                 transition: 'all 0.3s',
                 transformOrigin: 'center',
@@ -211,64 +216,62 @@ function NavBar() {
         </button>
       </nav>
 
-      {/* Mobile dropdown menu */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 68,
-          left: 0,
-          right: 0,
-          zIndex: 1199,
-          background: 'rgba(255,255,255,0.97)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid rgba(0,0,0,0.08)',
-          padding: menuOpen ? '16px 32px 24px' : '0 32px',
-          maxHeight: menuOpen ? '400px' : '0',
-          overflow: 'hidden',
-          transition: 'max-height 0.3s ease, padding 0.3s ease',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 4,
-        }}
-        className="villabnb-mobile-menu"
-      >
-        {NAV_LINKS.map(({ label, path }) => (
+      {menuOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 68,
+            left: 0,
+            right: 0,
+            zIndex: 1199,
+            background: 'rgba(255,255,255,0.97)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderBottom: '1px solid rgba(0,0,0,0.08)',
+            padding: '16px 32px 24px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+          }}
+          className="villabnb-mobile-menu"
+        >
+          {NAV_LINKS.map(({ label, path }) => (
+            <Link
+              key={path}
+              to={path}
+              style={{
+                fontSize: '1rem',
+                fontWeight: isActive(path) ? 600 : 400,
+                color: isActive(path) ? '#FF385C' : '#333',
+                textDecoration: 'none',
+                padding: '10px 0',
+                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                transition: 'color 0.2s',
+              }}
+            >
+              {label}
+            </Link>
+          ))}
           <Link
-            key={path}
-            to={path}
+            to="/signup"
             style={{
-              fontSize: '1rem',
-              fontWeight: isActive(path) ? 600 : 400,
-              color: isActive(path) ? '#FF385C' : '#333',
+              marginTop: 12,
+              display: 'inline-flex',
+              justifyContent: 'center',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#ffffff',
               textDecoration: 'none',
-              padding: '10px 0',
-              borderBottom: '1px solid rgba(0,0,0,0.06)',
-              transition: 'color 0.2s',
+              background: '#FF385C',
+              borderRadius: '999px',
+              padding: '10px 24px',
+              transition: 'background 0.2s',
             }}
           >
-            {label}
+            Sign In
           </Link>
-        ))}
-        <Link
-          to="/signup"
-          style={{
-            marginTop: 12,
-            display: 'inline-flex',
-            justifyContent: 'center',
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            color: '#ffffff',
-            textDecoration: 'none',
-            background: '#FF385C',
-            borderRadius: '999px',
-            padding: '10px 24px',
-            transition: 'background 0.2s',
-          }}
-        >
-          Sign In
-        </Link>
-      </div>
+        </div>
+      )}
 
       {/* Responsive styles injected once */}
       <style>{`
@@ -278,9 +281,6 @@ function NavBar() {
             display: none !important;
           }
           .villabnb-hamburger {
-            display: flex !important;
-          }
-          .villabnb-mobile-menu {
             display: flex !important;
           }
         }
