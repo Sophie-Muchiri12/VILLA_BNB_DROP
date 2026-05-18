@@ -1,246 +1,407 @@
-import React from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHouse, faClock, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from "react";
 
-const LandingPage = () => {
+const NAV_LINKS = ["Home", "Discover", "Experiences", "Reviews", "Hosting"];
+
+export default function VillaBnbLanding() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
   return (
-    <div>
+    <div className="min-h-screen font-sans bg-white overflow-x-hidden">
       {/* Hero Section */}
-      <section className="bg-[url('https://th.bing.com/th/id/R.f85dfe5577c4dadefb2c504745045d89?rik=b7aIZNvrtQ2wmQ&pid=ImgRaw&r=0')] bg-cover bg-center text-white h-screen flex flex-col justify-center items-center">
-        <h1 className="text-5xl font-bold mb-4 text-shadow">Welcome to Villabnb</h1>
-        <p className="text-xl mb-8 text-shadow">Your next vacation starts here</p>
+      <section className="relative h-screen min-h-[600px] flex flex-col">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80"
+            alt="Luxury villa with pool"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-transparent" />
+        </div>
+
+        {/* Navbar */}
+        <nav
+          className={`relative z-20 flex items-center justify-between px-8 py-5 transition-all duration-300 ${
+            scrolled ? "bg-white/10 backdrop-blur-md" : ""
+          }`}
+        >
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-[#FF385C] flex items-center justify-center">
+              <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+                <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm3.5 8c0 1.93-1.57 3.5-3.5 3.5S6.5 11.93 6.5 10 8.07 6.5 10 6.5s3.5 1.57 3.5 3.5z" fill="white" />
+              </svg>
+            </div>
+            <span className="text-white font-bold text-lg tracking-tight">VillaBnB</span>
+          </div>
+
+          {/* Nav links */}
+          <div className="hidden md:flex items-center gap-8">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link}
+                href="#"
+                className={`text-sm transition-colors font-medium ${
+                  link === "Home"
+                    ? "text-white"
+                    : "text-white/80 hover:text-white"
+                }`}
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+
+          {/* Login/Signup button */}
+          <button className="text-sm text-white border border-white/60 rounded-full px-6 py-2 hover:bg-white hover:text-gray-900 transition-all duration-200 font-medium">
+            Sign In
+          </button>
+        </nav>
+
+        {/* Hero content */}
+        <div className="relative z-10 flex-1 flex flex-col justify-end pb-16 px-8 md:px-12">
+          <div className="max-w-2xl">
+            <h1 className="text-white text-5xl md:text-6xl font-bold leading-tight mb-6">
+              Find Your Perfect Villa Escape
+            </h1>
+            <p className="text-white/90 text-lg mb-8 max-w-md">
+              Discover stunning villas and luxury homes around the world. Your dream getaway is just one click away.
+            </p>
+            <div className="flex items-center gap-3">
+              <button className="bg-[#FF385C] text-white font-semibold text-sm rounded-full px-8 py-3 hover:bg-[#E6005F] transition-colors shadow-lg">
+                Start Exploring
+              </button>
+              <button className="w-12 h-12 rounded-full border border-white/50 bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors">
+                <svg viewBox="0 0 16 16" fill="none" className="w-5 h-5">
+                  <path d="M3 13L13 3M13 3H7M13 3V9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Featured villa card — bottom right */}
+          <div className="absolute bottom-16 right-8 md:right-12 bg-white rounded-2xl p-5 max-w-[260px] shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1587381052722-47b37b2309d5?w=300&q=80"
+              alt="Featured villa"
+              className="w-full h-32 object-cover rounded-lg mb-4"
+            />
+            <div className="flex items-start justify-between mb-2">
+              <div>
+                <p className="text-sm font-semibold text-gray-900">
+                  Beachfront Villa, Malibu
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  5 bedrooms • Private pool
+                </p>
+                <p className="text-sm font-bold text-gray-900 mt-2">$580 <span className="text-xs font-normal text-gray-500">per night</span></p>
+              </div>
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-[#FF385C]">★</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
+            <p className="text-white/50 text-[10px] tracking-widest uppercase">Scroll to Explore</p>
+            <div className="w-px h-5 bg-white/30 animate-pulse" />
+          </div>
+        </div>
       </section>
 
-      {/* Features Section */}
+      {/* Search/Filter Section */}
+      <section className="py-16 px-8 md:px-16 max-w-6xl mx-auto">
+        <div className="bg-white rounded-3xl shadow-xl p-8 -mt-12 relative z-20">
+          <div className="grid md:grid-cols-4 gap-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Location</label>
+              <input type="text" placeholder="Where to?" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#FF385C]" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Check In</label>
+              <input type="date" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#FF385C]" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">Check Out</label>
+              <input type="date" className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#FF385C]" />
+            </div>
+            <div className="flex items-end">
+              <button className="w-full bg-[#FF385C] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#E6005F] transition-colors">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-24 px-8 md:px-16 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <span className="text-[#FF385C] text-sm font-semibold uppercase tracking-widest">About VillaBnB</span>
+            <h2 className="text-gray-900 text-4xl font-bold mt-3 mb-6 leading-tight">
+              Luxury Villa Stays Made Easy
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              VillaBnB connects travelers with the world's most beautiful private villas and luxury homes. Whether you're looking for a beachfront paradise, mountain retreat, or urban penthouse, we have the perfect escape waiting for you.
+            </p>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              Since 2015, we've hosted over 150,000 guests at our handpicked villa properties across 45 countries, offering unforgettable experiences and world-class hospitality.
+            </p>
+            <button className="bg-gray-900 text-white text-sm font-semibold rounded-full px-8 py-3 hover:bg-gray-700 transition-colors">
+              Become a Host
+            </button>
+          </div>
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1570129477492-45201003b6de?w=800&q=80"
+              alt="Luxury villa interior"
+              className="rounded-3xl w-full h-96 object-cover shadow-lg"
+            />
+            <div className="absolute -bottom-8 -left-8 bg-[#FF385C] text-white rounded-2xl p-6 shadow-xl">
+              <p className="text-4xl font-bold">150K+</p>
+              <p className="text-sm mt-2">Happy Guests Worldwide</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Villa Categories Section */}
       <section className="py-20 bg-gray-50">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-10 text-gray-800">Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="px-8 md:px-16 max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-[#FF385C] text-sm font-semibold uppercase tracking-widest">Villa Types</span>
+            <h2 className="text-gray-900 text-4xl font-bold mt-3">Browse Our Collections</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: "Deluxe rooms",
-                description: "",
-                imgUrl: 'https://img2.10bestmedia.com/Images/Photos/378649/Park-Hyatt-New-York-Manhattan-Sky-Suite-Master-Bedroom-low-res_54_990x660.jpg', // Add the path to your images
-                spec: [
-                  { label: "Spacious Accommodations", value: "Enjoy larger rooms with luxurious furnishings and amenities." },
-                  
-                 
-                ]
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7">
+                    <path d="M12 3L3 9v12h6v-6h6v6h6V9L12 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                  </svg>
+                ),
+                title: "Beach Villas",
+                desc: "Oceanfront properties with pristine beaches, private docks, and sunset views.",
               },
               {
-                title: "24-HR Room service",
-                description: "Built with high-quality service for a lasting stay!",
-                imgUrl: 'https://th.bing.com/th/id/OIP.Kdhel8ttIKL0d59I8D76HAHaE8?rs=1&pid=ImgDetMain', // Add the path to your images
-                spec: [
-                  { label: "Room Service", value: "Available 24/7 for all your dining and hospitality needs" },
-                 
-                ]
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7">
+                    <path d="M5 12h14M5 17h14M9 7h6M7 7h2M7 17h2M5 5h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ),
+                title: "Mountain Retreats",
+                desc: "Alpine cabins and hillside estates with panoramic views and privacy.",
               },
               {
-                title: "Perfect Fit",
-                description: "Exceptional spas suited for couples",
-                imgUrl: 'https://i.pinimg.com/originals/53/bf/fc/53bffc774772840dc0992d589e3e6e60.jpg', // Add the path to your images
-                spec: [
-                  { label: "Relaxation Suites", value: "Unwind in tranquil suites designed for ultimate comfort and peace." },
-                 
-                ]
+                icon: (
+                  <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                  </svg>
+                ),
+                title: "Urban Penthouses",
+                desc: "Sophisticated city-center properties in the world's most vibrant destinations.",
               },
-            ].map(({ title, description, imgUrl, spec }, index) => (
-              <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" key={index}>
-                <img src={imgUrl} alt={title} className="w-full h-60 object-cover rounded-md mb-4" />
-                <h3 className="font-semibold text-xl mb-2">{title}</h3>
-                <p className="mb-4">{description}</p>
-                <ul className="text-left">
-                  {spec.map(({ label, value }) => (
-                    <li key={label} className="mb-2">
-                      <span className="font-bold">{label}:</span> {value}
-                    </li>
-                  ))}
-                </ul>
+            ].map((s) => (
+              <div key={s.title} className="bg-white rounded-2xl p-8 hover:shadow-lg transition-shadow group cursor-pointer">
+                <div className="w-14 h-14 bg-[#FF385C]/15 rounded-xl flex items-center justify-center mb-5 text-gray-800 group-hover:bg-[#FF385C] group-hover:text-white transition-all">
+                  {s.icon}
+                </div>
+                <h3 className="text-gray-900 font-semibold text-lg mb-3">{s.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-
-    {/* Blog Section */}
-<section className="py-20 bg-gray-50">
-  <div className="container mx-auto text-center">
-    <h2 className="text-3xl font-bold mb-10 text-gray-800">From the Blog</h2>
-    <p className="mb-8 text-gray-500">Learn how to make the most of your vacation with expert advice.</p>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      {[
-        { 
-          date: 'Oct 20, 2023', 
-          author: 'Michael Foster', 
-          title: 'Maximize Your Vacation Experience', 
-          imgUrl: 'https://th.bing.com/th/id/OIP.bf1Zl7crVOuGkIMTTIUjEQHaEo?rs=1&pid=ImgDetMain',
-          url: 'https://www.allianztravelinsurance.com/travel/planning/plan-to-maximizing-vacation-time.htm'  // Add blog URLs
-        },
-        { 
-          date: 'Oct 15, 2023', 
-          author: 'Lindsay Walton', 
-          title: 'Top 10 Tips for Finding Hidden Gems', 
-          imgUrl: 'https://th.bing.com/th/id/OIP.QfYXVF-VMO1iDxX48Gta_gHaE8?w=3840&h=2560&rs=1&pid=ImgDetMain',
-          url: 'https://www.offthebeatentravel.com/travel'  // Add blog URLs
-        },
-        { 
-          date: 'Oct 10, 2023', 
-          author: 'Tom Cook', 
-          title: 'How to Get the Best Deals on Villa Rentals', 
-          imgUrl: 'https://th.bing.com/th/id/OIP.IOuyDhdMmAQ_SGnfWWIM7wHaHa?rs=1&pid=ImgDetMain',
-          url: 'https://www.igms.com/can-you-negotiate-airbnb/#:~:text=Guests%20are%20allowed%20to%20contact,top%20of%20a%20special%20offer.'  // Add blog URLs
-        },
-      ].map(({ date, author, title, imgUrl, url }) => (
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105" key={title}>
-          <img src={imgUrl} alt={title} className="w-full h-80 object-cover" />
-          <div className="p-6">
-            <p className="text-sm text-gray-500 mb-2">{date} · {author}</p>
-            <h3 className="font-semibold text-xl mb-4">{title}</h3>
-
-            {/* "Read More" anchor link */}
-            <a href={url} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block">
-              Read More
-            </a>
-          </div>
+      {/* Stats Banner */}
+      <section className="bg-gradient-to-r from-gray-900 to-gray-800 py-16">
+        <div className="max-w-5xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { num: "150K+", label: "Guests Hosted" },
+            { num: "5,000+", label: "Properties" },
+            { num: "45", label: "Countries" },
+            { num: "4.9/5", label: "Average Rating" },
+          ].map((s) => (
+            <div key={s.label}>
+              <p className="text-[#FF385C] text-4xl font-bold">{s.num}</p>
+              <p className="text-white/60 text-sm mt-2">{s.label}</p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-
+      {/* Featured Villas Section */}
+      <section className="py-24 px-8 md:px-16 max-w-6xl mx-auto">
+        <div className="flex items-end justify-between mb-12">
+          <div>
+            <span className="text-[#FF385C] text-sm font-semibold uppercase tracking-widest">Gallery</span>
+            <h2 className="text-gray-900 text-4xl font-bold mt-3">Featured Properties</h2>
+          </div>
+          <a href="#" className="text-sm text-gray-600 hover:text-gray-900 underline underline-offset-4 transition-colors font-medium">
+            View All
+          </a>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { img: "https://images.unsplash.com/photo-1586368944529-38f1df32e959?w=600&q=80", title: "Santorini Sunset Villa", loc: "Santorini, Greece", price: "$850/night" },
+            { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", title: "Malibu Coast Estate", loc: "Malibu, USA", price: "$1,200/night" },
+            { img: "https://images.unsplash.com/photo-1512453693356-231e51f3fb15?w=600&q=80", title: "Bali Paradise Villa", loc: "Bali, Indonesia", price: "$450/night" },
+          ].map((p) => (
+            <div key={p.title} className="group cursor-pointer">
+              <div className="overflow-hidden rounded-2xl mb-4 relative">
+                <img
+                  src={p.img}
+                  alt={p.title}
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white flex items-center justify-center transition-colors">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                  </svg>
+                </button>
+              </div>
+              <h3 className="text-gray-900 font-semibold text-lg">{p.title}</h3>
+              <p className="text-gray-600 text-sm mt-1">{p.loc}</p>
+              <p className="text-[#FF385C] font-bold mt-2">{p.price}</p>
+              <div className="flex gap-1 mt-2">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-[#FF385C] text-sm">★</span>
+                ))}
+                <span className="text-gray-500 text-sm ml-2">(248)</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Testimonials Section */}
-<section className="py-20 bg-gray-50">
-  <div className="container mx-auto text-center">
-    <h2 className="text-3xl font-bold mb-10 text-gray-800">We have worked with thousands of amazing people</h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      {[
-        {
-          quote: "Enjoyed every moment in my stay thank you villabnb",
-          author: "Leslie Alexander",
-          username: "@lesliealexander",
-          imgUrl: "https://randomuser.me/api/portraits/women/44.jpg",
-        },
-        {
-          quote: "Needed time with my husband away from the kids and work and the cottages at villabnb made the experience way better",
-          author: "Lindsay Walton",
-          username: "@lindsaywalton",
-          imgUrl: "https://randomuser.me/api/portraits/women/45.jpg",
-        },
-        {
-          quote: "Got a break from work at villa and my it was amazing!!.",
-          author: "Whitney Francis",
-          username: "@whitneyfrancis",
-          imgUrl: "https://randomuser.me/api/portraits/women/46.jpg",
-        },
-        {
-          quote: "Not the vacay type but villa exceeded my expectations :).",
-          author: "John Smith",
-          username: "@johnsmith",
-          imgUrl: "https://randomuser.me/api/portraits/men/47.jpg",
-        },
-        {
-          quote: "Awesome services.",
-          author: "Emily Johnson",
-          username: "@emilyjohnson",
-          imgUrl: "https://randomuser.me/api/portraits/women/48.jpg",
-        },
-        {
-          quote: "Amazing experiences.",
-          author: "Leonard Krasner",
-          username: "@leonardkrasner",
-          imgUrl: "https://randomuser.me/api/portraits/men/49.jpg",
-        },
-      ].map(({ quote, author, username, imgUrl }) => (
-        <div className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105" key={author}>
-          <img src={imgUrl} alt={author} className="w-16 h-16 rounded-full mx-auto mb-4" />
-          <p className="italic text-gray-600 mb-4">"{quote}"</p>
-          <h4 className="font-semibold text-lg text-blue-600">{author}</h4>
-          <p className="text-sm text-gray-500">{username}</p>
+      <section className="py-20 bg-gray-50">
+        <div className="px-8 md:px-16 max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-[#FF385C] text-sm font-semibold uppercase tracking-widest">Guests Love Us</span>
+            <h2 className="text-gray-900 text-4xl font-bold mt-3">Traveler Reviews</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                text: "The villa exceeded all our expectations. Stunning views, perfect amenities, and incredible hospitality. We're already planning our next stay!",
+                author: "Sarah Mitchell",
+                location: "London, UK"
+              },
+              {
+                text: "VillaBnB made our dream vacation possible. The booking process was seamless and the villa was even more beautiful in person.",
+                author: "Marco Rossi",
+                location: "Milan, Italy"
+              },
+              {
+                text: "From start to finish, everything was perfect. The owner was attentive, the property was immaculate, and the location was paradise.",
+                author: "Emma Chen",
+                location: "Singapore"
+              },
+            ].map((t, i) => (
+              <div key={i} className="bg-white rounded-2xl p-7 shadow-md hover:shadow-lg transition-shadow">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, j) => (
+                    <span key={j} className="text-[#FF385C]">★</span>
+                  ))}
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed mb-4">{t.text}</p>
+                <div>
+                  <p className="text-gray-900 font-semibold text-sm">{t.author}</p>
+                  <p className="text-gray-500 text-xs">{t.location}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
+      {/* CTA Section */}
+      <section className="relative py-24 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80"
+          alt="Villa CTA"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 text-center px-8 max-w-2xl mx-auto">
+          <h2 className="text-white text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Ready for Your Villa Getaway?
+          </h2>
+          <p className="text-white/80 mb-10 leading-relaxed text-lg">
+            Explore thousands of handpicked villas and luxury homes. Start your unforgettable journey today.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button className="bg-[#FF385C] text-white font-semibold text-sm rounded-full px-10 py-3 hover:bg-[#E6005F] transition-colors shadow-lg">
+              Explore Villas Now
+            </button>
+            <button className="text-white border border-white/50 rounded-full px-10 py-3 text-sm hover:bg-white/10 transition-colors font-medium">
+              Learn About Hosting
+            </button>
+          </div>
+        </div>
+      </section>
 
-      {/* Footer Section */}
-<footer className="bg-gray-900 text-white py-12">
-  <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-    
-    {/* Logo and Tagline */}
-    <div className="mb-6">
-      <div className="flex items-center mb-4">
-        {/* Logo */}
-        <span className="text-4xl text-blue-400">
-          <img 
-          src={`${process.env.PUBLIC_URL}/villabnbdark.png`}
-          alt="villabnb logo"
-          
-          />
-        </span>
-      </div>
-      <p className="text-gray-400">tranquility in every villa</p>
-    </div>
-    
-    {/* Solutions */}
-    <div>
-      <h5 className="text-lg font-semibold mb-4">Solutions</h5>
-      <ul>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Marketing</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Analytics</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Commerce</a></li>
-        <li><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Insights</a></li>
-      </ul>
-    </div>
-
-    {/* Support */}
-    <div>
-      <h5 className="text-lg font-semibold mb-4">Support</h5>
-      <ul>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Pricing</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Documentation</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Guides</a></li>
-        <li><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">API Status</a></li>
-      </ul>
-    </div>
-
-    {/* Company */}
-    <div>
-      <h5 className="text-lg font-semibold mb-4">Villabnb</h5>
-      <ul>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">About</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Blog</a></li>
-        <li className="mb-2"><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Jobs</a></li>
-        <li><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Press</a></li>
-        <li><a href="https://www.instagram.com/airbnb/" className="hover:text-blue-400">Partners</a></li>
-      </ul>
-    </div>
-
-    {/* Legal */}
-    
-  </div>
-
-  {/* Social Media Links */}
-  <div className="container mx-auto text-center mt-10">
-    <div className="flex justify-center space-x-6">
-      <a href="https://www.instagram.com/airbnb/" aria-label="Instagram" className="text-gray-400 hover:text-blue-400"><i className="fab fa-instagram">villabnb_drop</i></a>
-      <a href="https://www.instagram.com/airbnb/" aria-label="X" className="text-gray-400 hover:text-blue-400"><i className="fab fa-x-twitter"></i></a>
-     
-      <a href="https://www.instagram.com/airbnb/" aria-label="YouTube" className="text-gray-400 hover:text-blue-400"><i className="fab fa-youtube"></i></a>
-    </div>
-  </div>
-
-  <div className="container mx-auto text-center mt-8 text-gray-500">
-    <p>© 2024 Villabnb. All rights reserved.</p>
-  </div>
-</footer>
-
+      {/* Footer */}
+      <footer className="bg-gray-900 py-12 px-8 md:px-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8 pb-8 border-b border-gray-800">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-[#FF385C] flex items-center justify-center">
+                <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+                  <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm3.5 8c0 1.93-1.57 3.5-3.5 3.5S6.5 11.93 6.5 10 8.07 6.5 10 6.5s3.5 1.57 3.5 3.5z" fill="white" />
+                </svg>
+              </div>
+              <span className="text-white font-bold text-lg">VillaBnB</span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 flex-1">
+              <div>
+                <h4 className="text-white font-semibold text-sm mb-4">Discover</h4>
+                <ul className="space-y-2">
+                  {["Browse Villas", "Popular Destinations", "Trending Now"].map(l => (
+                    <li key={l}><a href="#" className="text-white/50 text-xs hover:text-white transition-colors">{l}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm mb-4">Host</h4>
+                <ul className="space-y-2">
+                  {["Become a Host", "Host Guidelines", "Resources"].map(l => (
+                    <li key={l}><a href="#" className="text-white/50 text-xs hover:text-white transition-colors">{l}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-white font-semibold text-sm mb-4">Support</h4>
+                <ul className="space-y-2">
+                  {["Help Center", "Safety Tips", "Contact Us"].map(l => (
+                    <li key={l}><a href="#" className="text-white/50 text-xs hover:text-white transition-colors">{l}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-white/40 text-sm">© 2025 VillaBnB. All rights reserved.</p>
+            <div className="flex gap-8">
+              {["Privacy", "Terms", "Cookie Policy"].map((l) => (
+                <a key={l} href="#" className="text-white/50 text-sm hover:text-white transition-colors">{l}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-};
-
-export default LandingPage;
+}
