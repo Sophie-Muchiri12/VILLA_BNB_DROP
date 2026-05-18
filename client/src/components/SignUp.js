@@ -88,8 +88,7 @@ function Signup({ showNotification }) {
     };
 
     return (
-        // paddingTop: '68px' offsets the fixed navbar height so the form isn't hidden beneath it
-        <Box sx={{ minHeight: '100vh', width: '100vw', display: 'flex', paddingTop: '68px' }}>
+        <Box sx={{ minHeight: '100vh', width: '100vw', display: 'flex' }}>
             <Grid container sx={{ flex: 1, width: '100%' }}>
                 {/* Left side: Form */}
                 <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f7f7f7' }}>

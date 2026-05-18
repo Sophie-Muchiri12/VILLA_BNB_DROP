@@ -1,16 +1,4 @@
-import { useState, useEffect } from "react";
-
-const NAV_LINKS = ["Home", "Discover", "Experiences", "Reviews", "Hosting"];
-
 export default function VillaBnbLanding() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
   return (
     <div className="min-h-screen font-sans bg-white overflow-x-hidden">
       {/* Hero Section */}
@@ -25,46 +13,7 @@ export default function VillaBnbLanding() {
           <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-transparent" />
         </div>
 
-        {/* Navbar */}
-        <nav
-          className={`relative z-20 flex items-center justify-between px-8 py-5 transition-all duration-300 ${
-            scrolled ? "bg-white/10 backdrop-blur-md" : ""
-          }`}
-        >
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[#FF385C] flex items-center justify-center">
-              <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
-                <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm3.5 8c0 1.93-1.57 3.5-3.5 3.5S6.5 11.93 6.5 10 8.07 6.5 10 6.5s3.5 1.57 3.5 3.5z" fill="white" />
-              </svg>
-            </div>
-            <span className="text-white font-bold text-lg tracking-tight">VillaBnB</span>
-          </div>
-
-          {/* Nav links */}
-          <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link}
-                href="#"
-                className={`text-sm transition-colors font-medium ${
-                  link === "Home"
-                    ? "text-white"
-                    : "text-white/80 hover:text-white"
-                }`}
-              >
-                {link}
-              </a>
-            ))}
-          </div>
-
-          {/* Login/Signup button */}
-          <button className="text-sm text-white border border-white/60 rounded-full px-6 py-2 hover:bg-white hover:text-gray-900 transition-all duration-200 font-medium">
-            Sign In
-          </button>
-        </nav>
-
-        {/* Hero content */}
+        {/* Hero content — global NavBar overlays this section */}
         <div className="relative z-10 flex-1 flex flex-col justify-end pb-16 px-8 md:px-12">
           <div className="max-w-2xl">
             <h1 className="text-white text-5xl md:text-6xl font-bold leading-tight mb-6">

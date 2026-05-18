@@ -1,3 +1,7 @@
+:root {
+  --navbar-height: 68px;
+}
+
 body {
   font-family: 'Lato', sans-serif;
   background-image: white;

@@ -25,8 +25,7 @@ function Listings() {
   };
 
   return (
-    // paddingTop pushes content below the fixed 68px navbar
-    <div style={{ paddingTop: '88px', paddingLeft: '32px', paddingRight: '32px', paddingBottom: '40px', background: '#fff', minHeight: '100vh' }}>
+    <div style={{ paddingLeft: '32px', paddingRight: '32px', paddingTop: '24px', paddingBottom: '40px', background: '#fff', minHeight: '100vh' }}>
       <h2 className="text-2xl font-bold mb-8">Your Listings</h2>
 
       {/* Modal for Email Input */}

@@ -74,8 +74,7 @@ function Home({ showNotification }) {
   };
 
   return (
-    // paddingTop: '68px' pushes all content below the fixed navbar
-    <Container maxWidth="lg" sx={{ paddingTop: '88px', paddingBottom: '40px' }}>
+    <Container maxWidth="lg" sx={{ paddingTop: 3, paddingBottom: '40px' }}>
       {/* Modal for entering email */}
       <Modal
         open={favoriteModalOpen}
