@@ -1,4 +1,11 @@
+import villa1 from '../images/villa1.png';
+import villa2 from '../images/villa2.png';
+import villa3 from '../images/villa3.png';
+import villa4 from '../images/villa4.png';
+import villa5 from '../images/villa5.png';
+
 export default function VillaBnbLanding() {
+
   return (
     <div className="min-h-screen font-sans bg-white overflow-x-hidden">
       {/* Hero Section */}
@@ -6,7 +13,7 @@ export default function VillaBnbLanding() {
         {/* Background image with overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="client/src/images/villa2.png"
+            src={villa2}
             alt="Luxury villa with pool"
             className="w-full h-full object-cover"
           />
@@ -112,7 +119,7 @@ export default function VillaBnbLanding() {
           </div>
           <div className="relative">
             <img
-              src="client/src/images/villa3.png"
+              src={villa3}
               alt="Luxury villa interior"
               className="rounded-3xl w-full h-96 object-cover shadow-lg"
             />
@@ -203,9 +210,9 @@ export default function VillaBnbLanding() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { img: "client/src/images/villa4.png", title: "Santorini Sunset Villa", loc: "Santorini, Greece", price: "$850/night" },
+            { img: villa4, title: "Santorini Sunset Villa", loc: "Santorini, Greece", price: "$850/night" },
             { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", title: "Malibu Coast Estate", loc: "Malibu, USA", price: "$1,200/night" },
-            { img: "client/src/images/villa5.png", title: "Bali Paradise Villa", loc: "Bali, Indonesia", price: "$450/night" },
+            { img: villa5, title: "Bali Paradise Villa", loc: "Bali, Indonesia", price: "$450/night" },
           ].map((p) => (
             <div key={p.title} className="group cursor-pointer">
               <div className="overflow-hidden rounded-2xl mb-4 relative">
