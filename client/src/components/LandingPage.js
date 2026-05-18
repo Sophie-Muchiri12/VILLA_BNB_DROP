@@ -6,7 +6,7 @@ export default function VillaBnbLanding() {
         {/* Background image with overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80"
+            src="client/src/images/villa2.png"
             alt="Luxury villa with pool"
             className="w-full h-full object-cover"
           />
@@ -37,7 +37,7 @@ export default function VillaBnbLanding() {
           {/* Featured villa card — bottom right */}
           <div className="absolute bottom-16 right-8 md:right-12 bg-white rounded-2xl p-5 max-w-[260px] shadow-2xl">
             <img 
-              src="https://images.unsplash.com/photo-1587381052722-47b37b2309d5?w=300&q=80"
+              src={villa1}
               alt="Featured villa"
               className="w-full h-32 object-cover rounded-lg mb-4"
             />
@@ -112,7 +112,7 @@ export default function VillaBnbLanding() {
           </div>
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1570129477492-45201003b6de?w=800&q=80"
+              src="client/src/images/villa3.png"
               alt="Luxury villa interior"
               className="rounded-3xl w-full h-96 object-cover shadow-lg"
             />
@@ -203,9 +203,9 @@ export default function VillaBnbLanding() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { img: "https://images.unsplash.com/photo-1586368944529-38f1df32e959?w=600&q=80", title: "Santorini Sunset Villa", loc: "Santorini, Greece", price: "$850/night" },
+            { img: "client/src/images/villa4.png", title: "Santorini Sunset Villa", loc: "Santorini, Greece", price: "$850/night" },
             { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", title: "Malibu Coast Estate", loc: "Malibu, USA", price: "$1,200/night" },
-            { img: "https://images.unsplash.com/photo-1512453693356-231e51f3fb15?w=600&q=80", title: "Bali Paradise Villa", loc: "Bali, Indonesia", price: "$450/night" },
+            { img: "client/src/images/villa5.png", title: "Bali Paradise Villa", loc: "Bali, Indonesia", price: "$450/night" },
           ].map((p) => (
             <div key={p.title} className="group cursor-pointer">
               <div className="overflow-hidden rounded-2xl mb-4 relative">
