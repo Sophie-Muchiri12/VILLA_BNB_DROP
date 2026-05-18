@@ -1,39 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import '../App.css';
 
 const NAV_LINKS = [
-  { label: 'Home',     path: '/' },
-  { label: 'Villas',   path: '/home' },
+  { label: 'Home', path: '/' },
+  { label: 'Villas', path: '/home' },
   { label: 'Listings', path: '/listings' },
-  { label: 'Sign Up',  path: '/signup' },
+  { label: 'Sign Up', path: '/signup' },
 ];
+
+const LIGHT_NAV_PATHS = new Set(['/home', '/listings', '/signup']);
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isLanding = location.pathname === '/';
-  // Light style: solid background + dark text on app pages; on landing only after scroll
-  const useLightStyle = !isLanding || scrolled;
+  const path = location.pathname.replace(/\/$/, '') || '/';
+  const useLightStyle = LIGHT_NAV_PATHS.has(path) || (path === '/' && scrolled);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     handler();
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
-  }, [location.pathname]);
+  }, [path]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
-  }, [location.pathname]);
+  }, [path]);
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (routePath) => {
+    const normalized = routePath.replace(/\/$/, '') || '/';
+    return path === normalized;
+  };
+
+  const navClass = useLightStyle ? 'villabnb-nav--light' : 'villabnb-nav--dark';
 
   return (
     <>
       <nav
+        key={path}
+        className={navClass}
         style={{
           position: 'fixed',
           top: 0,
@@ -44,15 +52,10 @@ function NavBar() {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 32px',
-          height: '68px',
-          transition: 'background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease',
-          background: useLightStyle ? 'rgba(255,255,255,0.92)' : 'transparent',
-          backdropFilter: useLightStyle ? 'blur(12px)' : 'none',
-          WebkitBackdropFilter: useLightStyle ? 'blur(12px)' : 'none',
-          boxShadow: useLightStyle ? '0 1px 0 rgba(0,0,0,0.08)' : 'none',
+          height: 'var(--navbar-height)',
+          transition: 'background 0.3s ease, box-shadow 0.3s ease',
         }}
       >
-        {/* Logo */}
         <Link
           to="/"
           style={{
@@ -81,20 +84,11 @@ function NavBar() {
               />
             </svg>
           </div>
-          <span
-            style={{
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              letterSpacing: '-0.01em',
-              color: useLightStyle ? '#1a1a1a' : '#ffffff',
-              transition: 'color 0.3s',
-            }}
-          >
+          <span className="villabnb-nav-logo-text" style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
             VillaBnB
           </span>
         </Link>
 
-        {/* Desktop nav links */}
         <div
           style={{
             display: 'flex',
@@ -103,34 +97,21 @@ function NavBar() {
           }}
           className="villabnb-desktop-nav"
         >
-          {NAV_LINKS.map(({ label, path }) => (
+          {NAV_LINKS.map(({ label, path: linkPath }) => (
             <Link
-              key={path}
-              to={path}
+              key={linkPath}
+              to={linkPath}
+              className={`villabnb-nav-link${isActive(linkPath) ? ' villabnb-nav-link--active' : ''}`}
               style={{
                 fontSize: '0.875rem',
                 fontWeight: 500,
                 textDecoration: 'none',
-                color: useLightStyle
-                  ? isActive(path) ? '#FF385C' : '#444'
-                  : isActive(path) ? '#ffffff' : 'rgba(255,255,255,0.75)',
-                transition: 'color 0.2s',
                 position: 'relative',
                 paddingBottom: '2px',
               }}
-              onMouseEnter={(e) => {
-                if (!isActive(path)) {
-                  e.currentTarget.style.color = useLightStyle ? '#1a1a1a' : '#ffffff';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive(path)) {
-                  e.currentTarget.style.color = useLightStyle ? '#444' : 'rgba(255,255,255,0.75)';
-                }
-              }}
             >
               {label}
-              {isActive(path) && (
+              {isActive(linkPath) && (
                 <span
                   style={{
                     position: 'absolute',
@@ -147,35 +128,25 @@ function NavBar() {
           ))}
         </div>
 
-        {/* Sign In button */}
         <Link
           to="/signup"
+          className="villabnb-signin-btn"
           style={{
             fontSize: '0.875rem',
             fontWeight: 500,
             textDecoration: 'none',
-            color: useLightStyle ? '#1a1a1a' : '#ffffff',
-            border: useLightStyle ? '1.5px solid rgba(0,0,0,0.2)' : '1.5px solid rgba(255,255,255,0.6)',
             borderRadius: '999px',
             padding: '8px 22px',
-            transition: 'all 0.2s ease',
+            border: '1.5px solid',
             background: 'transparent',
+            transition: 'all 0.2s ease',
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = useLightStyle ? '#1a1a1a' : '#ffffff';
-            e.currentTarget.style.color = useLightStyle ? '#ffffff' : '#1a1a1a';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = useLightStyle ? '#1a1a1a' : '#ffffff';
-          }}
-          className="villabnb-signin-btn"
         >
           Sign In
         </Link>
 
-        {/* Mobile hamburger */}
         <button
+          type="button"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
           style={{
@@ -198,7 +169,6 @@ function NavBar() {
                 display: 'block',
                 width: 22,
                 height: 2,
-                background: useLightStyle ? '#1a1a1a' : '#ffffff',
                 borderRadius: 2,
                 transition: 'all 0.3s',
                 transformOrigin: 'center',
@@ -220,7 +190,7 @@ function NavBar() {
         <div
           style={{
             position: 'fixed',
-            top: 68,
+            top: 'var(--navbar-height)',
             left: 0,
             right: 0,
             zIndex: 1199,
@@ -235,18 +205,17 @@ function NavBar() {
           }}
           className="villabnb-mobile-menu"
         >
-          {NAV_LINKS.map(({ label, path }) => (
+          {NAV_LINKS.map(({ label, path: linkPath }) => (
             <Link
-              key={path}
-              to={path}
+              key={linkPath}
+              to={linkPath}
               style={{
                 fontSize: '1rem',
-                fontWeight: isActive(path) ? 600 : 400,
-                color: isActive(path) ? '#FF385C' : '#333',
+                fontWeight: isActive(linkPath) ? 600 : 400,
+                color: isActive(linkPath) ? '#FF385C' : '#333',
                 textDecoration: 'none',
                 padding: '10px 0',
                 borderBottom: '1px solid rgba(0,0,0,0.06)',
-                transition: 'color 0.2s',
               }}
             >
               {label}
@@ -265,7 +234,6 @@ function NavBar() {
               background: '#FF385C',
               borderRadius: '999px',
               padding: '10px 24px',
-              transition: 'background 0.2s',
             }}
           >
             Sign In
@@ -273,7 +241,6 @@ function NavBar() {
         </div>
       )}
 
-      {/* Responsive styles injected once */}
       <style>{`
         @media (max-width: 768px) {
           .villabnb-desktop-nav,

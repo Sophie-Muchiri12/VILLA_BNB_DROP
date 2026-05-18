@@ -2,6 +2,79 @@
   --navbar-height: 68px;
 }
 
+/* Navbar themes — class-based so link colors always win over global/Tailwind styles */
+.villabnb-nav--light {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.villabnb-nav--light .villabnb-nav-logo-text {
+  color: #1a1a1a !important;
+}
+
+.villabnb-nav--light .villabnb-nav-link {
+  color: #444 !important;
+}
+
+.villabnb-nav--light .villabnb-nav-link:hover {
+  color: #1a1a1a !important;
+}
+
+.villabnb-nav--light .villabnb-nav-link--active {
+  color: #ff385c !important;
+}
+
+.villabnb-nav--light .villabnb-signin-btn {
+  color: #1a1a1a !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.villabnb-nav--light .villabnb-signin-btn:hover {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.villabnb-nav--light .villabnb-hamburger span {
+  background: #1a1a1a !important;
+}
+
+.villabnb-nav--dark {
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.villabnb-nav--dark .villabnb-nav-logo-text {
+  color: #fff !important;
+}
+
+.villabnb-nav--dark .villabnb-nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.villabnb-nav--dark .villabnb-nav-link:hover {
+  color: #fff !important;
+}
+
+.villabnb-nav--dark .villabnb-nav-link--active {
+  color: #fff !important;
+}
+
+.villabnb-nav--dark .villabnb-signin-btn {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.villabnb-nav--dark .villabnb-signin-btn:hover {
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+
+.villabnb-nav--dark .villabnb-hamburger span {
+  background: #fff !important;
+}
+
 body {
   font-family: 'Lato', sans-serif;
   background-image: white;
