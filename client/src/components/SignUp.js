@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { keyframes } from '@emotion/react';
 import { useNavigate } from 'react-router-dom'; 
 
-// Validation schema for signup
 const SignupSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -24,7 +23,6 @@ const fadeIn = keyframes`
     }
 `;
 
-// Styles
 const customStyles = {
     form: {
         width: '100%',
@@ -90,8 +88,9 @@ function Signup({ showNotification }) {
     };
 
     return (
-        <Box sx={{ height: '100vh', width: '100vw', display: 'flex' }}>
-            <Grid container sx={{ height: '100%', width: '100%' }}>
+        // paddingTop: '68px' offsets the fixed navbar height so the form isn't hidden beneath it
+        <Box sx={{ minHeight: '100vh', width: '100vw', display: 'flex', paddingTop: '68px' }}>
+            <Grid container sx={{ flex: 1, width: '100%' }}>
                 {/* Left side: Form */}
                 <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f7f7f7' }}>
                     <Box sx={customStyles.form}>
@@ -160,7 +159,7 @@ function Signup({ showNotification }) {
                 </Grid>
 
                 {/* Right side: Image */}
-                <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'block' }, height: '100%' }}>
+                <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'flex' } }}>
                     <img 
                         src="https://th.bing.com/th/id/R.f85dfe5577c4dadefb2c504745045d89?rik=b7aIZNvrtQ2wmQ&pid=ImgRaw&r=0" 
                         alt="Signup visual"

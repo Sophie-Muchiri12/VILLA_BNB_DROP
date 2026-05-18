@@ -10,8 +10,8 @@ function Home({ showNotification }) {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favoriteModalOpen, setFavoriteModalOpen] = useState(false);
-  const [selectedListingId, setSelectedListingId] = useState(null); // Store selected listing ID
-  const [email, setEmail] = useState(''); // Store the guest's email
+  const [selectedListingId, setSelectedListingId] = useState(null);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     async function fetchListings() {
@@ -44,37 +44,38 @@ function Home({ showNotification }) {
 
     try {
       await createBooking(bookingData);
-      showNotification('Booking successful!'); // Use notification for booking success
+      showNotification('Booking successful!');
     } catch (error) {
       console.error('Booking failed:', error);
-      showNotification(`Booking failed: ${error.message || 'Try again.'}`); // Use notification for booking failure
+      showNotification(`Booking failed: ${error.message || 'Try again.'}`);
     }
   };
 
   const handleFavorite = (listingId) => {
-    setSelectedListingId(listingId); // Capture the listing ID when favorite is clicked
-    setFavoriteModalOpen(true); // Open the modal to enter email
+    setSelectedListingId(listingId);
+    setFavoriteModalOpen(true);
   };
 
   const submitFavorite = async () => {
     if (!email) {
-      showNotification('Please enter your email'); // Use notification for missing email
+      showNotification('Please enter your email');
       return;
     }
 
     try {
       await addFavorite({ email, listing_id: selectedListingId });
-      showNotification('Added to favorites!'); // Use notification for success
-      setFavoriteModalOpen(false); // Close the modal after successful submission
-      setEmail(''); // Reset email field only on successful submission
+      showNotification('Added to favorites!');
+      setFavoriteModalOpen(false);
+      setEmail('');
     } catch (error) {
       console.error('Failed to add to favorites:', error);
-      showNotification('Failed to add to favorites. Try again.'); // Use notification for failure
+      showNotification('Failed to add to favorites. Try again.');
     }
   };
 
   return (
-    <Container maxWidth="lg">
+    // paddingTop: '68px' pushes all content below the fixed navbar
+    <Container maxWidth="lg" sx={{ paddingTop: '88px', paddingBottom: '40px' }}>
       {/* Modal for entering email */}
       <Modal
         open={favoriteModalOpen}

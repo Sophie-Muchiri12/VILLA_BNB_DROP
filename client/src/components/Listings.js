@@ -6,12 +6,10 @@ function Listings() {
   const [favorites, setFavorites] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [email, setEmail] = useState('');
-  const [openModal, setOpenModal] = useState(true); // Start with the modal open
+  const [openModal, setOpenModal] = useState(true);
 
-  // Fetch data when email is provided
   useEffect(() => {
     if (email) {
-      // Fetch favorites and bookings
       Promise.all([
         getFavorites(email).then(data => setFavorites(data)),
         getBookings(email).then(data => setBookings(data))
@@ -22,17 +20,28 @@ function Listings() {
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     if (email) {
-      setOpenModal(false); // Close modal when email is submitted
+      setOpenModal(false);
     }
   };
 
   return (
-    <div className="p-8 bg-white">
+    // paddingTop pushes content below the fixed 68px navbar
+    <div style={{ paddingTop: '88px', paddingLeft: '32px', paddingRight: '32px', paddingBottom: '40px', background: '#fff', minHeight: '100vh' }}>
       <h2 className="text-2xl font-bold mb-8">Your Listings</h2>
 
       {/* Modal for Email Input */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box className="bg-white p-6 rounded-lg shadow-lg mx-auto mt-16 max-w-sm">
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          bgcolor: 'background.paper',
+          borderRadius: '12px',
+          boxShadow: 24,
+          p: 4,
+          width: 360,
+        }}>
           <Typography variant="h6" gutterBottom>
             Enter your email to view your listings
           </Typography>
